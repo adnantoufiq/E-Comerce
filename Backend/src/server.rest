@@ -1,0 +1,6 @@
+GET http://localhost:3001/get-products
+Content-Type: application/json
+
+###
+GET http://localhost:3001/user/sample-user/
+Content-Type: application/json
