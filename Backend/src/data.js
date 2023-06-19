@@ -18,6 +18,12 @@ const data = {
       password: "1234567",
       phone: "04055523",
     },
+    {
+      name: "shakib",
+      email: "shakib@gmail.com",
+      password: "123456",
+      phone: "00000000",
+    },
   ],
 };
 
