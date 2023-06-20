@@ -11,7 +11,7 @@ const findItemById = async (Model, id, options ={}) => {
     // console.log(user)
 
     if (!item) {
-      throw createHttpError(404, `${Model.modelName}Item-not-found`);
+      throw createHttpError(404, `${Model.modelName}-Item-not-found`);
     }
 
     return item;

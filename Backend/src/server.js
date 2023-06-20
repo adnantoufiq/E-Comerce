@@ -14,7 +14,7 @@ server.use(express.urlencoded({ extended: true })); //  for getting form data
 
 server.use(app);
 
-const APP_PORT = 3001;
+const APP_PORT = process.env.APP_PORT;
 server.listen(APP_PORT, async () => {
   console.log(`The app is listening at http://localhost:${APP_PORT}`);
   await connectDB();

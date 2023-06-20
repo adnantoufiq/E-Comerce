@@ -1,6 +1,4 @@
 
-
-
 const errorResponse = (
   res,
   { statusCode = 500, message = "internal-server-error" }

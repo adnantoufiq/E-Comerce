@@ -2,8 +2,39 @@ const createHttpError = require("http-errors");
 const User = require("../models/user-model");
 const { successResponse } = require("./response-controllers");
 const { findItemById } = require("../../services/findItem");
-const fs = require("fs");
 const { Model } = require("mongoose");
+const { deleteImage } = require("../../helper/image-delete");
+const { createJsonWebToken } = require("../../helper/jsonWebToken");
+
+const registerUser = async (req, res, next) => {
+  try {
+    const { name, email, phone, password, address } = req.body;
+    // console.log({email})
+
+    const userExist = await User.exists({ email: email });
+    if (userExist) {
+      throw createHttpError(
+        409,
+        "user-already-exist-with-this-mail, try-to-sign-in"
+      );
+    }
+
+    const token = createJsonWebToken(
+      { name, email, phone, password, address },
+      process.env.SECRET_KEY,
+      "10m"
+    );
+    // console.log(token);
+
+    return successResponse(res, {
+      statusCode: 200,
+      message: "user-register-successfully",
+      payload: { token },
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 const getUsers = async (req, res, next) => {
   try {
@@ -79,18 +110,7 @@ const deleteUser = async (req, res, next) => {
     const options = { password: 0 };
     const user = await findItemById(User, id, options);
     const userImagePath = user.image;
-    fs.access(userImagePath, (err) => {
-      if (err) {
-        console.log("userImage-is-not-found");
-      } else {
-        fs.unlink(userImagePath, (err) => {
-          if (err) {
-            throw err;
-          }
-          console.log("userImage-was-deleted-successfully");
-        });
-      }
-    });
+    deleteImage(userImagePath);
 
     await User.findByIdAndDelete({
       _id: id,
@@ -107,6 +127,7 @@ const deleteUser = async (req, res, next) => {
 };
 
 module.exports = {
+  registerUser,
   getUsers,
   getUser,
   deleteUser,

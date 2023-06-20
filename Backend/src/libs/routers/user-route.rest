@@ -7,6 +7,14 @@ POST http://localhost:3001/user/get-user/649011c4e4941027a49622e4
 Content-Type: application/json
 
 ###
-POST http://localhost:3001/user/delete-user/649011c4e4941027a49622e1
+POST http://localhost:3001/user/delete-user/649011c4e4941027a49622e4
 
 
+###
+POST http://localhost:3001/user/register-user/
+Content-Type: application/json
+
+{
+    "name": "toufiq",
+    "email": "toufiqtest234@gmail.com"
+}

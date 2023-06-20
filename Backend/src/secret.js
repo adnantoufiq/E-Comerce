@@ -3,10 +3,10 @@ require("dotenv").config({
   });
   
 const defaultImagePath = process.env.DEFAULT_IMAGE;
-console.log(defaultImagePath);
+// console.log(defaultImagePath);
 
 const APP_PORT = process.env.APP_PORT
-console.log(APP_PORT)
+// console.log(APP_PORT)
 
 
 module.exports={
