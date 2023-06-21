@@ -5,6 +5,8 @@ const { findItemById } = require("../../services/findItem");
 const { Model } = require("mongoose");
 const { deleteImage } = require("../../helper/image-delete");
 const { createJsonWebToken } = require("../../helper/jsonWebToken");
+const { frontEndUrl } = require("../../secret");
+const { sendEmailWithNodeMailer } = require("../../helper/email-modified");
 
 const registerUser = async (req, res, next) => {
   try {
@@ -26,9 +28,25 @@ const registerUser = async (req, res, next) => {
     );
     // console.log(token);
 
+    const emailDataSet = {
+      email,
+      subject: "Account Activation Email ",
+      html: `
+        <h2> hello ${name} ! </h2>
+        <p>Please click here to <a href= "${frontEndUrl}/users/active/${token}"> Active Your Account </a></p>
+
+      `,
+    };
+
+    try {
+      await sendEmailWithNodeMailer(emailDataSet);
+    } catch (error) {
+      throw createHttpError(500, "verification-email-send-problem");
+    }
+
     return successResponse(res, {
       statusCode: 200,
-      message: "user-register-successfully",
+      message: `check-your-${email}-for-verification`,
       payload: { token },
     });
   } catch (err) {

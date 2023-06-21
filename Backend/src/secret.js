@@ -5,11 +5,19 @@ require("dotenv").config({
 const defaultImagePath = process.env.DEFAULT_IMAGE;
 // console.log(defaultImagePath);
 
-const APP_PORT = process.env.APP_PORT
+const appPort = process.env.APP_PORT || 3002
 // console.log(APP_PORT)
+
+const smtpUserName = process.env.SMTP_USERNAME || "";
+const smtpPassword = process.env.SMTP_PASSWORD || ""
+const frontEndUrl =  process.env.CLIENT_FRONTEND_URL || ""
+
 
 
 module.exports={
     defaultImagePath,
-    APP_PORT,
+    appPort,
+    smtpUserName,
+    smtpPassword,
+    frontEndUrl
 }
